@@ -1,0 +1,9 @@
+
+If there is any horizontal spaces in .csv file, to remove these
+
+cat D.txt | tr -d "[:blank:]" >> Data.csv
+
+
+sed -i 's/?/ /g' train.txt
+
+sed -i 's/\.//g' train.txt

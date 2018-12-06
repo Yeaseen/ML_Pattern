@@ -1,0 +1,15 @@
+outlook,temperature,humidity,weather,int,float,play
+sunny,hot,high,weak,5,6.5,<=50K
+sunny,hot,high,strong,7,7.9,<=50K
+ocast,hot,high,weak,6,6,>50K
+rainy,medium, ,weak, ,7.9,>50K
+rainy,cool,normal,weak,9,7.9,>50K
+rainy,cool,normal,strong,9,9.0,<=50K
+ocast,cool,normal,strong,8,4.5,>50K
+sunny,medium,high,weak,7,7,<=50K
+sunny,cool,normal,weak,9, ,>50K
+rainy,medium,normal,weak,5,8,>50K
+sunny,medium,normal,strong,6,8.9,>50K
+ocast,medium,high,strong,9,7.8,>50K
+ocast,hot,normal,weak,6,4.5,>50K
+rainy,medium,high,strong,5,7.3,<=50K
