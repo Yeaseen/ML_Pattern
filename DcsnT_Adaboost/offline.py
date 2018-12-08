@@ -357,11 +357,11 @@ dfFull[dfFull.columns.values[-1]]= [-1 if x == 0 else 1 for x in dfFull[dfFull.c
 dfN,dfTestN= train_test_split(dfFull,test_size=0.2,shuffle=True,)
 
 
-for col_name in dfN.columns:
-    unique_cat = len(dfN[col_name].unique())
-    print(col_name)
-    print("Feature '{col_name}' has {unique_cat} unique categories\
-              ".format(col_name=col_name, unique_cat=unique_cat))
+#for col_name in dfN.columns:
+   # unique_cat = len(dfN[col_name].unique())
+   # print(col_name)
+    #print("Feature '{col_name}' has {unique_cat} unique categories\
+      #        ".format(col_name=col_name, unique_cat=unique_cat))
 
 
 ### end of preprocessing of CREDIT CARD FRAUD DETECTION DATA
@@ -375,7 +375,7 @@ for col_name in dfN.columns:
 
 
 
-## WORLING SCENARIO STARTED HERE
+## WORKING SCENARIO STARTED HERE
 #print(dfN['Class'].value_counts())
 #print(dfTestN['Class'].value_counts())
 
@@ -396,7 +396,7 @@ Yaw=dfN.iloc[:,-1].values.tolist().copy()
 testOutput=dfTestN.iloc[:,-1].values.tolist().copy()
 
 
-print(len(Yaw))
+#print(len(Yaw))
 #print(dfN.head(5))
 #print(dfTestN.head(5))
 
@@ -407,7 +407,7 @@ print(len(att))
 
 root=dcsnTreeRoot(dfN,att.copy(),dfN,0,15)
 
-print(type(root))
+#print(type(root))
 
 
 #print(len(testOutput))
@@ -435,7 +435,7 @@ printMeasure(TP,FP,TN,FN)
 
 
 
-'''
+
 
 
 #att=list(dfN.drop(dfN.columns[-1],axis=1).columns.values)
@@ -470,5 +470,5 @@ printMeasure(TP,FP,TN,FN)
 
 
 
-'''
+
 
