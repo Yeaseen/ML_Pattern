@@ -7,6 +7,9 @@ Created on Sun Dec  2 18:10:04 2018
 import numpy as np
 from sklearn import preprocessing
 from sklearn.metrics import accuracy_score
+import time
+
+
 def split(s, delim):
     words = []
     word = []
@@ -34,17 +37,19 @@ def loadfile(filename):
 def sigmoid(x):
     return 1 / (1 + np.exp(-1*x))
 
-def sigmoid_der(x):
-    return 1*sigmoid(x)*(1-sigmoid(x))
+#def sigmoid_der(x):
+#    return 1*sigmoid(x)*(1-sigmoid(x))
+
+
 
 def derivative(x):
     return x * (1 - x)
 
 
 
-train=loadfile('trainNN.txt')
+train=loadfile('trainNN1.txt')
 
-test=loadfile('testNN.txt')
+test=loadfile('testNN1.txt')
 
 train=np.array(train)
 train= train.astype(np.float)
@@ -99,6 +104,8 @@ learningRate= 0.01
 min_err = np.inf
 best_w = []
 
+
+start = time.time()
 for epoch in range(epochRange):
     
     for i in range(train.shape[0]):
@@ -149,6 +156,8 @@ for epoch in range(epochRange):
             weight[i] -= learningRate * delw[i]
 
 
+
+print("Training finished, time needed: ", time.time() - start)
 
 weight = best_w
 output = []

@@ -48,7 +48,7 @@ def plot_results(X, Y_, means, covariances, index, title):
         # components.
         if not np.any(Y_ == i):
             continue
-        plt.scatter(X[Y_ == i, 0], X[Y_ == i, 1], .8, color=color, marker= '*')
+        plt.scatter(X[Y_ == i, 0], X[Y_ == i, 1], s=7, color=color, marker= '*')
 
         # Plot an ellipse to show the Gaussian component
         angle = np.arctan(u[1] / u[0])
@@ -59,7 +59,7 @@ def plot_results(X, Y_, means, covariances, index, title):
         splot.add_artist(ell)
 
     plt.xlim(-7., 7.)
-    plt.ylim(-6., 6.)
+    plt.ylim(-5., 7.)
     #plt.xticks(())
     #plt.yticks(())
     plt.xlabel('PC1')
@@ -103,6 +103,7 @@ plt.show()
 numOfGauss=3  ## it is determined from the above plot
 
 color_iter = itertools.cycle(['red', 'green', 'blue'])
+
 
 #initial mean, cov, w
 mu = np.random.uniform(min(PrincipalComponents[:,0]),max(PrincipalComponents[:,0]),\
