@@ -58,8 +58,8 @@ def plot_results(X, Y_, means, covariances, index, title):
         ell.set_alpha(0.5)
         splot.add_artist(ell)
 
-    plt.xlim(-7., 7.)
-    plt.ylim(-5., 7.)
+    plt.xlim(-10., 10.)
+    plt.ylim(-10., 10.)
     #plt.xticks(())
     #plt.yticks(())
     plt.xlabel('PC1')
@@ -69,7 +69,7 @@ def plot_results(X, Y_, means, covariances, index, title):
 
 
 
-train=loadfile('data.txt')
+train=loadfile('onlineDataset.txt')
 train=np.array(train)
 train= train.astype(np.float)
 
@@ -90,8 +90,8 @@ PrincipalComponents=P.T
 plt.scatter(PrincipalComponents[:,0], PrincipalComponents[:,1], color=['red'], marker= '*', s=7)
 plt.xlabel('PC1')
 plt.ylabel('PC2')
-plt.xlim(-7., 7.)
-plt.ylim(-5., 5.)
+plt.xlim(-10., 10.)
+plt.ylim(-10., 10.)
 plt.title('Scatter plot DATASET after PCA')
 plt.show()
 
@@ -100,9 +100,9 @@ plt.show()
 
 ## ALL INITIALISATIONS 
 
-numOfGauss=3  ## it is determined from the above plot
+numOfGauss=4  ## it is determined from the above plot
 
-color_iter = itertools.cycle(['red', 'green', 'blue'])
+color_iter = itertools.cycle(['red', 'green', 'blue','yellow'])
 
 
 #initial mean, cov, w
@@ -172,7 +172,7 @@ while(True):
              'Gaussian Mixture Model at iteration ' + str(iterationNo))
     iterationNo+=1
 
-
+print(np.array(w)*N)
 
 
 

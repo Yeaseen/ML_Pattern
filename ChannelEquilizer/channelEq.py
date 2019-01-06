@@ -63,7 +63,7 @@ class channelClass:
             bs=''
             for j in range(0,l+1):
                 bs+=content[0][i-j]
-            bs=bs[::-1]
+            #bs=bs[::-1]
             clss=int(bs,2)
             xv=[]
             for k in range(0,l):
@@ -100,7 +100,7 @@ testXvector=model.distortedOutput(testcontent)
 
 
 l=2
-pathsarray=np.zeros((len(testXvector)-1,np.power(l+1,2)-1), dtype=float)
+pathsarray=np.zeros((len(testXvector)-1,np.power(l+1,2)-1), dtype=float)+np.finfo(np.float).eps
 
 
 for i in range(len(testXvector)-1):
@@ -111,7 +111,7 @@ for i in range(len(testXvector)-1):
         xv.append(testXvector[i+1])
         xv.reverse()
         for j in range(np.power(l+1,2)-1):
-            pathsarray[i][j]=multivariate_normal.pdf(xv, model.clusterMeans[j], model.clusterCovs[j])
+            pathsarray[i][j]+=np.log(model.clusterPriorProb[j])+multivariate_normal.pdf(xv, model.clusterMeans[j], model.clusterCovs[j])
             #print(multivariate_normal.pdf(xv, model.clusterMeans[j], model.clusterCovs[j]))
     else:
         xv=[]
@@ -119,19 +119,46 @@ for i in range(len(testXvector)-1):
         xv.append(testXvector[i+1])
         xv.reverse()
         for j in range(np.power(l+1,2)-1):
+            par=(j%4)*2
+            parmax=max(pathsarray[i-1][par],pathsarray[i-1][par+1])
+            pathsarray[i][j]+=parmax+np.log(0.5)+multivariate_normal.pdf(xv, model.clusterMeans[j], model.clusterCovs[j])
 
+output=[]
+lastNode=0
+for i in range(len(pathsarray)-1,0,-1):
+    print(i)
+    if(i==len(pathsarray)-1):
+        row=pathsarray[i]
+        lastNode=np.argmax(row)
+        output.append(lastNode)
+    #print(lastNode)
+    par=(lastNode%4)*2
+    if(pathsarray[i-1][par] > pathsarray[i-1][par+1]):
+        lastNode=par
+    else:
+        lastNode=par+1
+    output.append(lastNode)
 
-
-
-
-
-
-
-
-
-
-
-
+output.reverse()    
+newFile=[]
+for i in range(len(output)):
+    if(i==0):
+        strr='{0:03b}'.format(output[i])
+        print(strr)
+        print(strr[2])
+        print(strr[1])
+        print(strr[0])
+        newFile.append(strr[2])
+        newFile.append(strr[1])
+        newFile.append(strr[0])
+        continue
+    strr='{0:03b}'.format(output[i])
+    print(strr)
+    newFile.append(strr[0])
+    
+with open('newTest.txt', 'w') as f:
+    for item in newFile:
+        f.write("%s" % item)        
 
 
 
