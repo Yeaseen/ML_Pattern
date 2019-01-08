@@ -93,13 +93,13 @@ class channelClass:
 
 l=2
 model=channelClass(content,l)
-print(model.clusterCovs)
+#print(model.clusterCovs)
 
 testXvector=model.distortedOutput(testcontent)
 
 
 
-l=2
+#l=2
 pathsarray=np.zeros((len(testXvector)-1,np.power(l+1,2)-1), dtype=float)+np.finfo(np.float).eps
 
 
@@ -126,7 +126,7 @@ for i in range(len(testXvector)-1):
 output=[]
 lastNode=0
 for i in range(len(pathsarray)-1,0,-1):
-    print(i)
+    #print(i)
     if(i==len(pathsarray)-1):
         row=pathsarray[i]
         lastNode=np.argmax(row)
@@ -144,16 +144,12 @@ newFile=[]
 for i in range(len(output)):
     if(i==0):
         strr='{0:03b}'.format(output[i])
-        print(strr)
-        print(strr[2])
-        print(strr[1])
-        print(strr[0])
         newFile.append(strr[2])
         newFile.append(strr[1])
         newFile.append(strr[0])
         continue
     strr='{0:03b}'.format(output[i])
-    print(strr)
+    #print(strr)
     newFile.append(strr[0])
     
 with open('newTest.txt', 'w') as f:

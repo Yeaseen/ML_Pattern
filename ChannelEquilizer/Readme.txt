@@ -1,0 +1,1 @@
+Here input.txt file contains two lines. 1st line denotes h and 2nd line denotes the mean and variance of noise function to distort the channel data.
