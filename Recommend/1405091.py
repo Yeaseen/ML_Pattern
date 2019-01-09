@@ -1,5 +1,6 @@
 import numpy as np
 from sklearn.model_selection import train_test_split
+from scipy import linalg
 def split(s, delim):
     words = []
     word = []
@@ -72,9 +73,40 @@ for k in range(len(train)):
     for i in x_val:
         testSet[k][i]=99
 
-    
+#k=latent factor
+k=5
+users=len(train)
+print(users)
+items=len(train[0])
+print(items)    
 
+U=np.random.randint(-10,10,(users,k))
+V=np.zeros((k,items))
 
+i=0
+ux=train[::,i]
+pstns=np.where(ux !=99)
+pstns=pstns[0]
+
+#np.identity(3)
+invpart=np.zeros((k,k))
+otpart=np.zeros((k,1))
+lambdau=0.1
+
+for i in pstns:
+    mx=U[i]
+    mx=mx.reshape(1,5)
+    my=np.transpose(mx)
+    #print(ux[i]*my)
+    ans=np.matmul(my,mx)
+    invpart=invpart+ans
+    otpart=otpart+ux[i]*my
+fans=invpart+lambdau*np.identity(k)    
+fans=np.matmul(np.linalg.inv(fans),otpart)    
+print(fans)    
+
+#ux=np.array([0,1,2,3,4])
+#V[::,3] = np.transpose(ux)
 
 
 
