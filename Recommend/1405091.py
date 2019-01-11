@@ -1,6 +1,8 @@
 import numpy as np
+import time
 from sklearn.model_selection import train_test_split
-from scipy import linalg
+
+
 def split(s, delim):
     words = []
     word = []
@@ -28,7 +30,7 @@ def RMSE(U,V,TestM):
     count=0
     result=0
     for rM,rO in zip(TestM,outM):
-        pos=np.where(rM!=2)
+        pos=np.where(rM!=99)
         pos=pos[0]
         count=count+len(pos)
         for j in pos:
@@ -46,7 +48,7 @@ def RMSE(U,V,TestM):
 
    
 
-train=loadfile('dd.txt')
+train=loadfile('data.txt')
 train=np.array(train)
 train= train.astype(np.float)
 train = np.delete(train, 0, axis=1)
@@ -74,39 +76,93 @@ for k in range(len(train)):
         testSet[k][i]=99
 
 #k=latent factor
-k=5
+
 users=len(train)
 print(users)
 items=len(train[0])
 print(items)    
 
-U=np.random.randint(-10,10,(users,k))
-V=np.zeros((k,items))
+latent_factors=[5,10,20,40]
+lambdaSet=[0.01,0.1,1,10]
+Ulist=[[]]
+Vlist=[[]]
+unik=0
+lam=0
+pre_val_err=np.finfo(np.float).max
 
-i=0
-ux=train[::,i]
-pstns=np.where(ux !=99)
-pstns=pstns[0]
+start = time.time()
+f=open("uvSet.txt","w")
+for k in latent_factors:
+    for lambdau in lambdaSet:
+        U=np.random.uniform(-100,100,(users,k))
+        V=np.zeros((k,items))
+        prev_error=0
+        while(True):
+            for i in range(items):
+                #print(i)
+                ux=trainSet[::,i]
+                pstns=np.where(ux !=99)
+                pstns=pstns[0]
+                invpart=np.zeros((k,k))
+                otpart=np.zeros((k,1))
+                
+                for j in pstns:
+                    mx=U[j]
+                    mx=mx.reshape(1,k)
+                    my=np.transpose(mx)
+                    ans=np.matmul(my,mx)
+                    invpart=invpart+ans
+                    otpart=otpart+ux[j]*my
+                
+                fans=invpart+lambdau*np.identity(k)    
+                fans=np.matmul(np.linalg.inv(fans),otpart)
+                V[::,i]=np.transpose(fans)
+                #break
+            for n in range(users):
+                ux=trainSet[n]
+                #print(vx)
+                pstns=np.where(ux !=99)
+                pstns=pstns[0]
+                invpart=np.zeros((k,k))
+                otpart=np.zeros((k,1))
+                
+                for j in pstns:
+                    mx=V[::,j]
+                    #print(mx)
+                    mx=mx.reshape(1,k)
+                    my=np.transpose(mx)
+                    ans=np.matmul(my,mx)
+                    invpart=invpart+ans
+                    otpart=otpart+ux[j]*my
+                fans=invpart+lambdau*np.identity(k)    
+                fans=np.matmul(np.linalg.inv(fans),otpart)
+                U[n]=np.transpose(fans)
+                #break
+            
+            curr_err=RMSE(U,V,trainSet)
+            #print(curr_err)
+            if(np.abs(prev_error-curr_err)<0.01):
+                break
+            prev_error=curr_err
+        
+        valRMSE=RMSE(U,V,valSet)
+        if(valRMSE<pre_val_err):
+            pre_val_err=valRMSE
+            Ulist=U
+            Vlist=V
+            unik=k
+            lam=lambdau
+        f.write('For K= '+str(k)+'     lambda= '+str(lambdau)+'      '+str(valRMSE)+'\n')
+f.close()
+print("Training finished, time needed: ", time.time() - start)
 
-#np.identity(3)
-invpart=np.zeros((k,k))
-otpart=np.zeros((k,1))
-lambdau=0.1
 
-for i in pstns:
-    mx=U[i]
-    mx=mx.reshape(1,5)
-    my=np.transpose(mx)
-    #print(ux[i]*my)
-    ans=np.matmul(my,mx)
-    invpart=invpart+ans
-    otpart=otpart+ux[i]*my
-fans=invpart+lambdau*np.identity(k)    
-fans=np.matmul(np.linalg.inv(fans),otpart)    
-print(fans)    
 
-#ux=np.array([0,1,2,3,4])
-#V[::,3] = np.transpose(ux)
+rmseTest=RMSE(Ulist,Vlist,testSet)
+
+
+print('For K= '+str(unik)+'     lambda= '+str(lam)+'      '+str(rmseTest))
+finalData=np.matmul(Ulist,Vlist)
 
 
 
