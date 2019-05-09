@@ -1,16 +1,1 @@
-For K= 5     lambda= 0.01      4.46290102987
-For K= 5     lambda= 0.1      4.83787153024
-For K= 5     lambda= 1      4.33725755415
-For K= 5     lambda= 10      4.43522316969
-For K= 10     lambda= 0.01      5.07551922925
-For K= 10     lambda= 0.1      4.88404599445
-For K= 10     lambda= 1      4.67475046009
-For K= 10     lambda= 10      4.84039690833
-For K= 20     lambda= 0.01      6.68051930406
-For K= 20     lambda= 0.1      7.64603760401
-For K= 20     lambda= 1      6.78364907801
-For K= 20     lambda= 10      5.80097346897
-For K= 40     lambda= 0.01      8.05599148581
-For K= 40     lambda= 0.1      10.1528319147
-For K= 40     lambda= 1      11.0744069144
-For K= 40     lambda= 10      6.51498776229
+For K= 5     lambda= 1      4.331097700631718

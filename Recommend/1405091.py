@@ -46,12 +46,13 @@ def RMSE(U,V,TestM):
 
 #print(RMSE(np.array(u),np.array(v),np.array(w)))
 
-   
 
 train=loadfile('data.txt')
 train=np.array(train)
 train= train.astype(np.float)
 train = np.delete(train, 0, axis=1)
+
+#trr,trainextract = train_test_split(train,test_size=0.25,random_state=42)
 
 trainSet=train.copy()
 valSet=train.copy()
@@ -82,8 +83,8 @@ print(users)
 items=len(train[0])
 print(items)    
 
-latent_factors=[5,10,20,40]
-lambdaSet=[0.01,0.1,1,10]
+latent_factors=[5]
+lambdaSet=[1]
 Ulist=[[]]
 Vlist=[[]]
 unik=0
@@ -153,24 +154,23 @@ for k in latent_factors:
             unik=k
             lam=lambdau
         f.write('For K= '+str(k)+'     lambda= '+str(lambdau)+'      '+str(valRMSE)+'\n')
+        print('For K= '+str(k)+'     lambda= '+str(lambdau)+'      '+str(valRMSE)+'\n')
+        
 f.close()
 print("Training finished, time needed: ", time.time() - start)
 
-
-
-rmseTest=RMSE(Ulist,Vlist,testSet)
-
-
-print('For K= '+str(unik)+'     lambda= '+str(lam)+'      '+str(rmseTest))
-finalData=np.matmul(Ulist,Vlist)
+np.savetxt('U.txt', Ulist, fmt='%f')
+np.savetxt('V.txt', Vlist, fmt='%f')
 
 
 
+Ul=np.loadtxt('U1.txt', dtype=float)
+Vl=np.loadtxt('V1.txt', dtype=float)
 
+rmseTest=RMSE(Ul,Vl,testSet)
 
-
-
-
+print(' Error '+str(rmseTest))
+#finalData=np.matmul(Ulist,Vlist)
 
 
 

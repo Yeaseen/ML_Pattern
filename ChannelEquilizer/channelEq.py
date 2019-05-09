@@ -8,9 +8,9 @@ Created on Sat Dec 15 18:37:40 2018
 import numpy as np
 from scipy.stats import multivariate_normal
 
-with open('train.txt') as f:
+with open('trainOnline.txt') as f:
     content = f.read().split("\n")
-with open('test.txt') as f:
+with open('testOnline.txt') as f:
     testcontent = f.read().split("\n")
     
     

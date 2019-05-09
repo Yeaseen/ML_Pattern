@@ -4,3 +4,5 @@
 /PCA_EMClusteringGMM/onlineDataset.txt
 /Recommend/data.txt
 /TemplateMatch/movie.mov
+/ChannelEquilizer/trainOnline.txt
+/Recommend/dataOnline.txt
